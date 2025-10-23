@@ -1,0 +1,2 @@
+EDITOR=hx
+VISUAL=hx
