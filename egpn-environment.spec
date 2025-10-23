@@ -1,33 +1,26 @@
 Name:           egpn-environment
 Version:        1.0
 Release:        1%{?dist}
-Summary:        Installs a shell script in /etc/profile.d/
+Summary:        Installs shell scripts in /etc/profile.d/
 
 License:        GPLv3-only
-Source0:        epgn-aliases.sh
-Source1:        epgn-default-editor.sh
-Source2:        epgn-history.sh
-Source3:        epgn-prompt.sh
-
-Requires:       bash
-Requires:       bat
-Requires:       tmux
-Requires:       htop
+Source0:        %{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 
 %description
-Installs a shell script in /etc/profile.d/
+Installs shell scripts in /etc/profile.d/
 
 %prep
+%autosetup
 
 %build
 
 %install
-install -D -m 0755 %{SOURCE0} %{buildroot}/etc/profile.d/epgn-aliases.sh
-install -D -m 0755 %{SOURCE1} %{buildroot}/etc/profile.d/epgn-default-editor.sh
-install -D -m 0755 %{SOURCE2} %{buildroot}/etc/profile.d/epgn-history.sh
-install -D -m 0755 %{SOURCE3} %{buildroot}/etc/profile.d/epgn-prompt.sh
+install -D -m 0755 scripts/epgn-aliases.sh %{buildroot}/etc/profile.d/epgn-aliases.sh
+install -D -m 0755 scripts/epgn-default-editor.sh %{buildroot}/etc/profile.d/epgn-default-editor.sh
+install -D -m 0755 scripts/epgn-history.sh %{buildroot}/etc/profile.d/epgn-history.sh
+install -D -m 0755 scripts/epgn-prompt.sh %{buildroot}/etc/profile.d/epgn-prompt.sh
 
 %files
 /etc/profile.d/epgn-aliases.sh
