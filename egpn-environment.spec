@@ -4,10 +4,10 @@ Release:        1%{?dist}
 Summary:        Installs a shell script in /etc/profile.d/
 
 License:        GPLv3-only
-Source0:        epgn-aliases.sh
-Source1:        epgn-default-editor.sh
-Source2:        epgn-history.sh
-Source3:        epgn-prompt.sh
+Source0:        scripts/epgn-aliases.sh
+Source1:        scripts/epgn-default-editor.sh
+Source2:        scripts/epgn-history.sh
+Source3:        scripts/epgn-prompt.sh
 
 Requires:       bash
 Requires:       bat
