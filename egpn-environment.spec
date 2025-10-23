@@ -3,7 +3,7 @@ Version:        1.0.0
 Release:        1%{?dist}
 Summary:        Installs shell scripts in /etc/profile.d/
 License:        GPLv3-only
-Source0:        https://github.com/EpicGreen/epgn-environment/archive/refs/tags/%{version}.tar.gz
+Source0:        https://github.com/EpicGreen/epgn-environment/archive/refs/tags/v%{version}.tar.gz
 
 BuildArch:      noarch
 
