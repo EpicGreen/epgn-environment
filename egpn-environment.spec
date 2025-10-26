@@ -24,7 +24,7 @@ install -D -m 0644 profile.d/epgn-default-editor.sh %{buildroot}/etc/profile.d/e
 install -D -m 0644 profile.d/epgn-history.sh %{buildroot}/etc/profile.d/epgn-history.sh
 install -D -m 0644 profile.d/epgn-prompt.sh %{buildroot}/etc/profile.d/epgn-prompt.sh
 
-install -D -m 0755 scripts/hetznerdns_hook.sh %{buildroot}/usr/bin/hetzner_dns_hook
+install -D -m 0755 scripts/hetzner_dns_hook.sh %{buildroot}/usr/bin/hetzner_dns_hook
 
 %files
 /etc/skel/.config/helix/config.toml
