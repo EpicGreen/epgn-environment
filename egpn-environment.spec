@@ -1,5 +1,5 @@
 Name:           epgn-environment
-Version:        1.1.0
+Version:        1.2.0
 Release:        1%{?dist}
 Summary:        Installs shell scripts in /etc/profile.d/
 License:        GPLv3-only
@@ -36,10 +36,13 @@ install -D -m 0755 scripts/hetzner_dns_hook.sh %{buildroot}/usr/bin/hetzner_dns_
 /usr/bin/hetzner_dns_hook
 
 %changelog
-* Sun Oct 26 2025 Ante <ante@users.github.com> - 1.1.0-1
+* Fri Oct 31 2025 Ante <antedebaas@users.github.com> - 1.2.0-1
+- Updates to hetzner_dns_hook script for Hetzner Cloud API
+
+* Sun Oct 26 2025 Ante <antedebaas@users.github.com> - 1.1.0-1
 - Added hetzner_dns_hook script installation
 - Updated helix config installation paths
 - Improved file permissions for installed scripts
 
-* Thu Oct 23 2025 Ante <ante@users.github.com> - 1.0.0-1
+* Thu Oct 23 2025 Ante <antedebaas@users.github.com> - 1.0.0-1
 - Initial package
