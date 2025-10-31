@@ -1,5 +1,5 @@
 Name:           epgn-environment
-Version:        1.2.0
+Version:        1.2.1
 Release:        1%{?dist}
 Summary:        Installs shell scripts in /etc/profile.d/
 License:        GPLv3-only
@@ -19,6 +19,8 @@ Installs scripts used by the EpicGreen project to set up user environments.
 install -D -m 0755 configs/helix_config.toml %{buildroot}/etc/skel/.config/helix/config.toml
 install -D -m 0755 configs/helix_config.toml %{buildroot}/root/.config/helix/config.toml
 
+install -D -m 0755 etc/yum.repos.d/1password.repo %{buildroot}/etc/yum.repos.d/1password.repo
+
 install -D -m 0644 profile.d/epgn-aliases.sh %{buildroot}/etc/profile.d/epgn-aliases.sh
 install -D -m 0644 profile.d/epgn-default-editor.sh %{buildroot}/etc/profile.d/epgn-default-editor.sh
 install -D -m 0644 profile.d/epgn-history.sh %{buildroot}/etc/profile.d/epgn-history.sh
@@ -28,6 +30,7 @@ install -D -m 0755 scripts/hetzner_dns_hook.sh %{buildroot}/usr/bin/hetzner_dns_
 
 %files
 /etc/skel/.config/helix/config.toml
+/etc/yum.repos.d/1password.repo
 /root/.config/helix/config.toml
 /etc/profile.d/epgn-aliases.sh
 /etc/profile.d/epgn-default-editor.sh
@@ -36,6 +39,9 @@ install -D -m 0755 scripts/hetzner_dns_hook.sh %{buildroot}/usr/bin/hetzner_dns_
 /usr/bin/hetzner_dns_hook
 
 %changelog
+* Fri Oct 31 2025 Ante <antedebaas@users.github.com> - 1.2.1-1
+- Add 1password repo file installation
+
 * Fri Oct 31 2025 Ante <antedebaas@users.github.com> - 1.2.0-1
 - Updates to hetzner_dns_hook script for Hetzner Cloud API
 
