@@ -19,7 +19,7 @@ Installs scripts used by the EpicGreen project to set up user environments.
 install -D -m 0755 configs/helix_config.toml %{buildroot}/etc/skel/.config/helix/config.toml
 install -D -m 0755 configs/helix_config.toml %{buildroot}/root/.config/helix/config.toml
 
-install -D -m 0755 etc/yum.repos.d/1password.repo %{buildroot}/etc/yum.repos.d/1password.repo
+install -D -m 0755 yum.repos.d/1password.repo %{buildroot}/etc/yum.repos.d/1password.repo
 
 install -D -m 0644 profile.d/epgn-aliases.sh %{buildroot}/etc/profile.d/epgn-aliases.sh
 install -D -m 0644 profile.d/epgn-default-editor.sh %{buildroot}/etc/profile.d/epgn-default-editor.sh
