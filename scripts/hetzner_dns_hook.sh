@@ -11,7 +11,7 @@ if [[ ! $(command -v hcloud) || $(printf '%s\n' "1.54.0" "$(hcloud version | awk
     USE=API
     if [[ ! -f /etc/hetzner/auth ]]; then
         if [ "$1" = "setup" ]; then
-            mkdir -p /etc/hetzner
+            sudo mkdir -p /etc/hetzner
             echo "Using Hetzner API for DNS management."
             read -p "Please enter your Hetzner API token:" API_TOKEN
             if [ -z "$API_TOKEN" ]; then
@@ -19,7 +19,7 @@ if [[ ! $(command -v hcloud) || $(printf '%s\n' "1.54.0" "$(hcloud version | awk
                 exit 1
             fi
             echo "cloud_token=$API_TOKEN" | sudo tee /etc/hetzner/auth > /dev/null
-            sudo chmod 600 /etc/hetzner/auth
+            sudo chmod 660 /etc/hetzner/auth
             echo "API token saved to /etc/hetzner/auth."
             exit 0
         fi
@@ -92,6 +92,7 @@ if [[ "$1" = "create" ]]; then
             exit 1
         fi
     fi
+    sleep 10
     exit 0
 elif [[ "$1" = "cleanup" ]]; then
     if [ "$USE" = "API" ]; then

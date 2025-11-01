@@ -5,28 +5,25 @@ if [[ ! $1 ]]; then
     echo "certbot certonly --manual --preferred-challenges=dns --manual-auth-hook \"$0 create\" --manual-cleanup-hook \"$0 cleanup\" -d yourdomain.com -d *.yourdomain.com"
     exit 1
 fi
-
-if [[ ! $(command -v hcloud) || $(printf '%s\n' "1.54.0" "$(hcloud version | awk '{print $2}')" | sort -V | head -n1) < "1.54.0" ]]; then
-    if [[ ! -f /etc/transip/auth ]]; then
-        if [ "$1" = "setup" ]; then
-            mkdir -p /etc/transip
-            echo "Using TransIP API for DNS management."
-            read -p "Please enter your TransIP API key:" API_KEY
-            if [ -z "$API_KEY" ]; then
-                echo "API key cannot be empty."
-                exit 1
-            fi
-            echo "api_key=$API_KEY" | sudo tee /etc/transip/auth > /dev/null
-            sudo chmod 600 /etc/transip/auth
-            echo "API key saved to /etc/transip/auth."
-            exit 0
+if [[ ! -f /etc/transip/auth ]]; then
+    if [ "$1" = "setup" ]; then
+        sudo mkdir -p /etc/transip
+        echo "Using TransIP API for DNS management."
+        read -p "Please enter your TransIP API key:" API_KEY
+        if [ -z "$API_KEY" ]; then
+            echo "API key cannot be empty."
+            exit 1
         fi
-        echo "TransIP API key file not found at /etc/transip/auth."
-        echo "Please run '$0 setup'."
-        exit 1
+        echo "api_key=$API_KEY" | sudo tee /etc/transip/auth > /dev/null
+        sudo chmod 660 /etc/transip/auth
+        echo "API key saved to /etc/transip/auth."
+        exit 0
     fi
-    API_KEY=$(grep 'api_key=' /etc/transip/auth | cut -d '=' -f 2)
+    echo "TransIP API key file not found at /etc/transip/auth."
+    echo "Please run '$0 setup'."
+    exit 1
 fi
+API_KEY=$(grep 'api_key=' /etc/transip/auth | cut -d '=' -f 2)
 
 if [ -z "$CERTBOT_DOMAIN" ] || [ -z "$CERTBOT_VALIDATION" ]; then
     echo "This script is intended to be used as a Certbot DNS hook."
@@ -56,24 +53,25 @@ else
 fi
 
 if [[ "$1" = "create" ]]; then
-    RESPONSE=$(curl -s -X POST \
+    RESPONSE=$(curl -s --write-out '%{http_code}' --output /dev/null -X POST \
    	-H "Authorization: Bearer $API_KEY" \
    	-H "Content-Type: application/json" \
     -d '{ "dnsEntry": { "name": "'${RECORD}'","expire": 60,"type": "TXT","content": "\"'${CERTBOT_VALIDATION}'\"" } }' \
    	"https://api.transip.nl/v6/domains/${ZONE}/dns")
-    if [[ $(echo $RESPONSE | jq -r '.error') != "null" ]]; then
-        echo "Failed to create DNS record with messsage: $(echo $RESPONSE | jq -r '.error.message')"
+    if [[ "$RESPONSE" != 201 ]]; then
+        echo "Failed to create DNS record. HTTP status code: $RESPONSE"
         exit 1
     fi
-exit 0
+    sleep 10
+    exit 0
 elif [[ "$1" = "cleanup" ]]; then
-    RESPONSE=$(curl -s -X DELETE \
+    RESPONSE=$(curl -s --write-out '%{http_code}' --output /dev/null -X DELETE \
    	-H "Authorization: Bearer $API_KEY" \
    	-H "Content-Type: application/json" \
     -d '{ "dnsEntry": { "name": "'${RECORD}'","expire": 60,"type": "TXT","content": "\"'${CERTBOT_VALIDATION}'\"" } }' \
    	"https://api.transip.nl/v6/domains/${ZONE}/dns")
-    if [[ $(echo $RESPONSE | jq -r '.error') != "null" ]]; then
-        echo "Failed to cleanup DNS record with messsage: $(echo $RESPONSE | jq -r '.error.message')"
+    if [[ "$RESPONSE" != 204 ]]; then
+        echo "Failed to cleanup DNS record. HTTP status code: $RESPONSE"
         exit 1
     fi
     exit 0
