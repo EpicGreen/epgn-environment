@@ -2,7 +2,7 @@
 USE=CLI
 if [[ ! $(command -v hcloud) || $(printf '%s\n' "1.54.0" "$(hcloud version | awk '{print $2}')" | sort -V | head -n1) < "1.54.0" ]]; then
     USE=API
-    if [[ ! -f /etc/hetzner/cloudapi ]]; then
+    if [[ ! -f /etc/hetzner/auth ]]; then
         if [ "$1" = "setup" ]; then
             mkdir -p /etc/hetzner
             echo "Using Hetzner API for DNS management."
@@ -11,16 +11,16 @@ if [[ ! $(command -v hcloud) || $(printf '%s\n' "1.54.0" "$(hcloud version | awk
                 echo "API token cannot be empty."
                 exit 1
             fi
-            echo "$API_TOKEN" | sudo tee /etc/hetzner/cloudapi > /dev/null
-            sudo chmod 600 /etc/hetzner/cloudapi
-            echo "API token saved to /etc/hetzner/cloudapi."
+            echo "cloud_token=$API_TOKEN" | sudo tee /etc/hetzner/auth > /dev/null
+            sudo chmod 600 /etc/hetzner/auth
+            echo "API token saved to /etc/hetzner/auth."
             exit 0
         fi
-        echo "Hetzner API token file not found at /etc/hetzner/cloudapi."
+        echo "Hetzner Cloud API token file not found at /etc/hetzner/auth."
         echo "Please run '$0 setup'."
         exit 1
     fi
-    API_TOKEN=$(cat /etc/hetzner/cloudapi)
+    API_TOKEN=$(grep 'cloud_token=' /etc/hetzner/auth | cut -d '=' -f 2) 
 else
     if [[ $(hcloud context list | wc -l) = 1 ]]; then
         if [ "$1" = "setup" ]; then
