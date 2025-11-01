@@ -67,6 +67,10 @@ RECORD="_acme-challenge"
 if [ -z $SUBDOMAIN ]; then
     RECORD="_acme-challenge"
 else
+    WILDCARD=$(echo "${SUBDOMAIN}" | cut -d '.' -f 1)
+    if [ "$WILDCARD" = "*" ]; then
+        SUBDOMAIN=$(echo "${SUBDOMAIN}" | sed 's/^\*\.//')
+    fi
     RECORD="_acme-challenge.${SUBDOMAIN}"
 fi
 

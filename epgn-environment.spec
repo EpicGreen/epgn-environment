@@ -1,6 +1,6 @@
 Name:           epgn-environment
 Version:        1.2.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Installs shell scripts in /etc/profile.d/
 License:        GPLv3-only
 Source0:        https://github.com/EpicGreen/epgn-environment/archive/refs/tags/v%{version}.tar.gz
@@ -27,6 +27,7 @@ install -D -m 0644 profile.d/epgn-history.sh %{buildroot}/etc/profile.d/epgn-his
 install -D -m 0644 profile.d/epgn-prompt.sh %{buildroot}/etc/profile.d/epgn-prompt.sh
 
 install -D -m 0755 scripts/hetzner_dns_hook.sh %{buildroot}/usr/bin/hetzner_dns_hook
+install -D -m 0755 scripts/transip_dns_hook.sh %{buildroot}/usr/bin/transip_dns_hook
 
 %files
 /etc/skel/.config/helix/config.toml
@@ -37,8 +38,12 @@ install -D -m 0755 scripts/hetzner_dns_hook.sh %{buildroot}/usr/bin/hetzner_dns_
 /etc/profile.d/epgn-history.sh
 /etc/profile.d/epgn-prompt.sh
 /usr/bin/hetzner_dns_hook
+/usr/bin/transip_dns_hook
 
 %changelog
+* Sat Nov 01 2025 Ante <antedebaas@users.github.com> - 1.2.3-1
+- Updated hetzner_dns_hook and transip_dns_hook scripts
+
 * Fri Oct 31 2025 Ante <antedebaas@users.github.com> - 1.2.1-1
 - Add 1password repo file installation
 
