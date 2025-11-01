@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+
+if [[ ! $1 ]]; then
+    echo "Usage: $0 {create|cleanup|setup}"
+    echo "certbot certonly --manual --preferred-challenges=dns --manual-auth-hook \"$0 create\" --manual-cleanup-hook \"$0 cleanup\" -d yourdomain.com -d *.yourdomain.com"
+    exit 1
+fi
+
 USE=CLI
 if [[ ! $(command -v hcloud) || $(printf '%s\n' "1.54.0" "$(hcloud version | awk '{print $2}')" | sort -V | head -n1) < "1.54.0" ]]; then
     USE=API
@@ -20,7 +27,7 @@ if [[ ! $(command -v hcloud) || $(printf '%s\n' "1.54.0" "$(hcloud version | awk
         echo "Please run '$0 setup'."
         exit 1
     fi
-    API_TOKEN=$(grep 'cloud_token=' /etc/hetzner/auth | cut -d '=' -f 2) 
+    API_TOKEN=$(grep 'cloud_token=' /etc/hetzner/auth | cut -d '=' -f 2)
 else
     if [[ $(hcloud context list | wc -l) = 1 ]]; then
         if [ "$1" = "setup" ]; then
@@ -99,8 +106,4 @@ elif [[ "$1" = "cleanup" ]]; then
         fi
     fi
     exit 0
-else
-    echo "Usage: $0 {create|cleanup|setup}"
-    echo "certbot certonly --manual --preferred-challenges=dns --manual-auth-hook \"$0 create\" --manual-cleanup-hook \"$0 cleanup\" -d yourdomain.com -d *.yourdomain.com"
-    exit 1
 fi

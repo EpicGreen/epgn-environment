@@ -1,5 +1,5 @@
 Name:           epgn-environment
-Version:        1.2.2
+Version:        1.2.3
 Release:        1%{?dist}
 Summary:        Installs shell scripts in /etc/profile.d/
 License:        GPLv3-only
