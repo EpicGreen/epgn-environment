@@ -1,6 +1,6 @@
 Name:           epgn-environment
 Version:        1.2.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Installs shell scripts in /etc/profile.d/
 License:        GPLv3-only
 Source0:        https://github.com/EpicGreen/epgn-environment/archive/refs/tags/v%{version}.tar.gz

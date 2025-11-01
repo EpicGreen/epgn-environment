@@ -11,21 +11,21 @@ if [[ ! $(command -v hcloud) || $(printf '%s\n' "1.54.0" "$(hcloud version | awk
         if [ "$1" = "setup" ]; then
             mkdir -p /etc/transip
             echo "Using TransIP API for DNS management."
-            read -p "Please enter your TransIP API token:" API_TOKEN
-            if [ -z "$API_TOKEN" ]; then
-                echo "API token cannot be empty."
+            read -p "Please enter your TransIP API key:" API_KEY
+            if [ -z "$API_KEY" ]; then
+                echo "API key cannot be empty."
                 exit 1
             fi
-            echo "cloud_token=$API_TOKEN" | sudo tee /etc/transip/auth > /dev/null
+            echo "api_key=$API_KEY" | sudo tee /etc/transip/auth > /dev/null
             sudo chmod 600 /etc/transip/auth
-            echo "API token saved to /etc/transip/auth."
+            echo "API key saved to /etc/transip/auth."
             exit 0
         fi
-        echo "TransIP API token file not found at /etc/transip/auth."
+        echo "TransIP API key file not found at /etc/transip/auth."
         echo "Please run '$0 setup'."
         exit 1
     fi
-    API_TOKEN=$(grep 'api_token=' /etc/transip/auth | cut -d '=' -f 2)
+    API_KEY=$(grep 'api_key=' /etc/transip/auth | cut -d '=' -f 2)
 fi
 
 if [ -z "$CERTBOT_DOMAIN" ] || [ -z "$CERTBOT_VALIDATION" ]; then
@@ -55,15 +55,9 @@ else
     RECORD="_acme-challenge.${SUBDOMAIN}"
 fi
 
-curl -X POST \
--H "Content-Type: application/json" \
--H "Authorization: Bearer [your JSON web token]" \
--d '{ "dnsEntry": { "name": "www","expire": 86400,"type": "A","content": "127.0.0.1" } }' \
-"https://api.transip.nl/v6/domains/example.com/dns"
-
 if [[ "$1" = "create" ]]; then
     RESPONSE=$(curl -s -X POST \
-   	-H "Authorization: Bearer $API_TOKEN" \
+   	-H "Authorization: Bearer $API_KEY" \
    	-H "Content-Type: application/json" \
     -d '{ "dnsEntry": { "name": "'${RECORD}'","expire": 60,"type": "TXT","content": "\"'${CERTBOT_VALIDATION}'\"" } }' \
    	"https://api.transip.nl/v6/domains/${ZONE}/dns")
@@ -74,7 +68,7 @@ if [[ "$1" = "create" ]]; then
 exit 0
 elif [[ "$1" = "cleanup" ]]; then
     RESPONSE=$(curl -s -X DELETE \
-   	-H "Authorization: Bearer $API_TOKEN" \
+   	-H "Authorization: Bearer $API_KEY" \
    	-H "Content-Type: application/json" \
     -d '{ "dnsEntry": { "name": "'${RECORD}'","expire": 60,"type": "TXT","content": "\"'${CERTBOT_VALIDATION}'\"" } }' \
    	"https://api.transip.nl/v6/domains/${ZONE}/dns")
