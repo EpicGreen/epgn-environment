@@ -57,7 +57,7 @@ if [[ "$1" = "create" ]]; then
     RESPONSE=$(curl -s --write-out '%{http_code}' --output /dev/null -X POST \
    	-H "Authorization: Bearer $API_TOKEN" \
    	-H "Content-Type: application/json" \
-    -d '{ "dnsEntry": { "name": "'${RECORD}'","expire": 60,"type": "TXT","content": "\"'${CERTBOT_VALIDATION}'\"" } }' \
+    -d '{ "dnsEntry": { "name": "'${RECORD}'","expire": 60,"type": "TXT","content": "'${CERTBOT_VALIDATION}'" } }' \
    	"https://api.transip.nl/v6/domains/${ZONE}/dns")
     if [[ "$RESPONSE" != 201 ]]; then
         echo "Failed to create DNS record. HTTP status code: $RESPONSE"
@@ -69,7 +69,7 @@ elif [[ "$1" = "cleanup" ]]; then
     RESPONSE=$(curl -s --write-out '%{http_code}' --output /dev/null -X DELETE \
    	-H "Authorization: Bearer $API_TOKEN" \
    	-H "Content-Type: application/json" \
-    -d '{ "dnsEntry": { "name": "'${RECORD}'","expire": 60,"type": "TXT","content": "\"'${CERTBOT_VALIDATION}'\"" } }' \
+    -d '{ "dnsEntry": { "name": "'${RECORD}'","expire": 60,"type": "TXT","content": "'${CERTBOT_VALIDATION}'" } }' \
    	"https://api.transip.nl/v6/domains/${ZONE}/dns")
     if [[ "$RESPONSE" != 204 ]]; then
         echo "Failed to cleanup DNS record. HTTP status code: $RESPONSE"
