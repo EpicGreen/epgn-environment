@@ -58,6 +58,9 @@ install -d %{buildroot}%{_bindir}
 # Install binary
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
 
+# Install bash completion
+install -D -m 644 %{_builddir}/%{name}-%{version}/target/release/%{name} --gen-completion-out bash %{buildroot}%{_datadir}/bash-completion/completions/%{name}
+
 %files
 %{_bindir}/%{name}
 
