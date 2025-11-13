@@ -5,7 +5,7 @@ Summary:        Magical shell history
 
 License:        MIT
 URL:            https://github.com/atuinsh/%{name}
-Source0:        https://github.com/atuinsh/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
+Source0:        https://github.com/atuinsh/%{name}/archive/refs/tags/v%{version}.tar.gz
 
 BuildRequires:  rust >= 1.70
 BuildRequires:  cargo
