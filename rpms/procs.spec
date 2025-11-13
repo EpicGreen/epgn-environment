@@ -51,6 +51,7 @@ export RUSTFLAGS="-Ccodegen-units=1 -Clink-dead-code=off"
 
 # Build with release optimizations
 cargo build --release --verbose --locked
+%{_builddir}/%{name}-%{version}/target/release/%{name} --gen-completion-out bash >> etc/bash-completion/completions/%{name}
 
 %install
 install -d %{buildroot}%{_bindir}
@@ -59,10 +60,11 @@ install -d %{buildroot}%{_bindir}
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
 
 # Install bash completion
-install -D -m 644 %{_builddir}/%{name}-%{version}/target/release/%{name} --gen-completion-out bash %{buildroot}%{_datadir}/bash-completion/completions/%{name}
+install -D -m 644 etc/bash-completion/%{name} %{buildroot}%{_datadir}/bash-completion/completions/%{name}
 
 %files
 %{_bindir}/%{name}
+%{_datadir}/bash-completion/completions/%{name}
 
 %changelog
 * Thu Nov 13 2025 Ante de Baas <antedebaas@users.github.com> - 18.10.0-1
