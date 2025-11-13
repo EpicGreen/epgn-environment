@@ -1,5 +1,5 @@
 Name:           dua-cli
-Version:        0.32.2
+Version:        2.32.2
 Release:        1%{?dist}
 Summary:        Terminal bandwidth utilization tool
 
@@ -62,5 +62,5 @@ install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{build
 %{_bindir}/%{name}
 
 %changelog
-* Thu Nov 13 2025 Ante de Baas <antedebaas@users.github.com> - 0.32.2-1
+* Thu Nov 13 2025 Ante de Baas <antedebaas@users.github.com> - 2.32.2-1
 - initial package
