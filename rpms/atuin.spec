@@ -7,8 +7,6 @@ License:        MIT
 URL:            https://github.com/atuinsh/%{name}
 Source0:        https://github.com/atuinsh/%{name}/archive/refs/tags/v%{version}.tar.gz
 
-BuildRequires:  rust >= 1.70
-BuildRequires:  cargo
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  openssl-devel
@@ -45,6 +43,9 @@ of your history between machines, via an Atuin server.
 %autosetup -n %{name}-%{version}
 
 %build
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+source "$HOME/.cargo/env"
+
 # Set build environment for optimal compilation
 export CARGO_TARGET_DIR=%{_builddir}/%{name}-%{version}/target
 export RUSTFLAGS="-Ccodegen-units=1 -Clink-dead-code=off"
