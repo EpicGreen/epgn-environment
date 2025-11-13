@@ -55,16 +55,17 @@ cargo build --release --verbose --locked
 
 %install
 install -d %{buildroot}%{_bindir}
+install -d %{buildroot}%{_datadir}/bash-completion/completions/
+install -d %{buildroot}%{_sysconfdir}/%{name}
 
-# Install binary
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
-
-# Install bash completion
 install -D -m 644 etc/bash-completion/%{name} %{buildroot}%{_datadir}/bash-completion/completions/%{name}
+install -D -m 644 etc/config.toml %{buildroot}%{_sysconfdir}/%{name}/config.toml
 
 %files
 %{_bindir}/%{name}
 %{_datadir}/bash-completion/completions/%{name}
+%config(noreplace) %{_sysconfdir}/%{name}/config.toml
 
 %changelog
 * Thu Nov 13 2025 Ante de Baas <antedebaas@users.github.com> - 18.10.0-1

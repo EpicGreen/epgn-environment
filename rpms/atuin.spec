@@ -13,6 +13,7 @@ BuildRequires:  openssl-devel
 BuildRequires:  systemd-rpm-macros
 BuildRequires:  pkgconfig(openssl)
 BuildRequires:  make
+BuildRequires:  git
 
 # Only build on supported architectures for Rust
 ExcludeArch:    i686 s390 %{power64}
