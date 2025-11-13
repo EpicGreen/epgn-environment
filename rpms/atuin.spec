@@ -1,12 +1,11 @@
 Name:           atuin
-Version:        10.18.0
+Version:        18.10.0
 Release:        1%{?dist}
 Summary:        Magical shell history
 
 License:        MIT
 URL:            https://github.com/atuinsh/%{name}
-#Source0:        https://github.com/atuinsh/%{name}/archive/refs/tags/v%{version}.tar.gz
-Source0:        https://github.com/atuinsh/atuin/releases/download/v18.10.0/source.tar.gz
+Source0:        https://github.com/atuinsh/%{name}/archive/refs/tags/v%{version}.tar.gz
 
 BuildRequires:  rust >= 1.70
 BuildRequires:  cargo
@@ -43,7 +42,7 @@ Additionally, it provides optional and fully encrypted synchronisation
 of your history between machines, via an Atuin server.
 
 %prep
-%autosetup -n source/%{name}-%{version}
+%autosetup -n %{name}-%{version}
 
 %build
 # Set build environment for optimal compilation
