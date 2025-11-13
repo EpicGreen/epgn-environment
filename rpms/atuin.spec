@@ -68,7 +68,7 @@ install -d %{buildroot}%{_datadir}blesh
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
 
 #install ble.sh
-install -D -m 755 %{_builddir}/%{_datadir}blesh/ble.sh %{buildroot}%{_datadir}blesh/ble.sh
+install -D -m 755 %{_builddir}%{_datadir}/blesh/ble.sh %{buildroot}%{_datadir}/blesh/ble.sh
 
 %files
 %{_bindir}/%{name}
