@@ -5,8 +5,7 @@ Summary:        A modern replacement for ps
 
 License:        MIT
 URL:            https://github.com/dalance/%{name}
-#Source0:        https://github.com/dalance/%{name}/archive/refs/tags/v%{version}.tar.gz
-Source0:        https://github.com/dalance/atuin/releases/download/v18.10.0/source.tar.gz
+Source0:        https://github.com/dalance/%{name}/archive/refs/tags/v%{version}.tar.gz
 
 BuildRequires:  rust >= 1.70
 BuildRequires:  cargo
