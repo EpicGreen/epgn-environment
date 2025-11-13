@@ -56,14 +56,30 @@ export RUSTFLAGS="-Ccodegen-units=1 -Clink-dead-code=off"
 # Build with release optimizations
 cargo build --release --verbose --locked
 
+git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git %{_builddir}/ble.sh
+make -C %{_builddir}/ble.sh install PREFIX=%{_builddir}/usr
+
 %install
 install -d %{buildroot}%{_bindir}
+install -d %{buildroot}%{_datadir}blesh
 
 # Install binary
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
 
+#install ble.sh
+install -D -m 755 %{_builddir}/%{_datadir}blesh/ble.sh %{buildroot}%{_datadir}blesh/ble.sh
+
 %files
 %{_bindir}/%{name}
+%{_datadir}blesh/ble.sh
+
+%post
+echo 'eval "$(atuin init bash)" >> /dev/null' >> /etc/bashrc
+echo 'source -- /usr/share/blesh/ble.sh' >> /etc/bashrc
+
+%postun
+sed -i '/atuin init bash/d' /etc/bashrc
+sed -i '/source -- \/usr\/share\/blesh\/ble.sh/d' /etc/bashrc
 
 %changelog
 * Thu Nov 13 2025 Ante de Baas <antedebaas@users.github.com> - 18.10.0-1
