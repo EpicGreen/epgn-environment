@@ -72,7 +72,7 @@ install -D -m 755 %{_builddir}%{_datadir}/blesh/ble.sh %{buildroot}%{_datadir}/b
 
 %files
 %{_bindir}/%{name}
-%{_datadir}blesh/ble.sh
+%{_datadir}/blesh/ble.sh
 
 %post
 echo 'eval "$(atuin init bash)" >> /dev/null' >> /etc/bashrc
