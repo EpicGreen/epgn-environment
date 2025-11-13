@@ -59,7 +59,7 @@ install -d %{buildroot}%{_bindir}
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/dua %{buildroot}%{_bindir}/dua
 
 %files
-%{_bindir}/%{name}
+%{_bindir}/dua
 
 %changelog
 * Thu Nov 13 2025 Ante de Baas <antedebaas@users.github.com> - 2.32.2-1
