@@ -31,6 +31,10 @@ ExcludeArch:    i686 s390 %{power64}
 
 Requires:       glibc
 BuildRequires:  cargo
+BuildRequires:  cpp
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
+BuildRequires:  make
 
 %description
 Atuin replaces your existing shell history with a SQLite database,
@@ -39,7 +43,7 @@ Additionally, it provides optional and fully encrypted synchronisation
 of your history between machines, via an Atuin server.
 
 %prep
-%autosetup -n %{name}-%{version}
+%autosetup -n source/%{name}-%{version}
 
 %build
 # Set build environment for optimal compilation
