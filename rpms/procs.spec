@@ -51,7 +51,7 @@ export RUSTFLAGS="-Ccodegen-units=1 -Clink-dead-code=off"
 
 # Build with release optimizations
 cargo build --release --verbose --locked
-%{_builddir}/%{name}-%{version}/target/release/%{name} --gen-completion-out bash >> etc/bash-completion/completions/%{name}
+%{_builddir}/%{name}-%{version}/target/release/%{name} --gen-completion-out bash >> %{_builddir}/bash-completion
 
 %install
 install -d %{buildroot}%{_bindir}
@@ -59,8 +59,8 @@ install -d %{buildroot}%{_datadir}/bash-completion/completions/
 install -d %{buildroot}%{_sysconfdir}/%{name}
 
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
-install -D -m 644 etc/bash-completion/%{name} %{buildroot}%{_datadir}/bash-completion/completions/%{name}
-install -D -m 644 etc/config.toml %{buildroot}%{_sysconfdir}/%{name}/config.toml
+install -D -m 644 %{_builddir}/bash-completion %{buildroot}%{_datadir}/bash-completion/completions/%{name}
+install -D -m 644 %{_builddir}/%{name}-%{version}/config/large.toml %{buildroot}%{_sysconfdir}/%{name}/config.toml
 
 %files
 %{_bindir}/%{name}
