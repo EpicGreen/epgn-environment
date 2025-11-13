@@ -1,12 +1,12 @@
-Name:           atuin
-Version:        10.18.0
+Name:           procs
+Version:        0.14.10
 Release:        1%{?dist}
-Summary:        Magical shell history
+Summary:        A modern replacement for ps
 
 License:        MIT
-URL:            https://github.com/atuinsh/%{name}
-#Source0:        https://github.com/atuinsh/%{name}/archive/refs/tags/v%{version}.tar.gz
-Source0:        https://github.com/atuinsh/atuin/releases/download/v18.10.0/source.tar.gz
+URL:            https://github.com/dalance/%{name}
+#Source0:        https://github.com/dalance/%{name}/archive/refs/tags/v%{version}.tar.gz
+Source0:        https://github.com/dalance/atuin/releases/download/v18.10.0/source.tar.gz
 
 BuildRequires:  rust >= 1.70
 BuildRequires:  cargo
@@ -31,12 +31,13 @@ ExcludeArch:    i686 s390 %{power64}
 
 Requires:       glibc
 BuildRequires:  cargo
+BuildRequires:  cpp
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
+BuildRequires:  make
 
 %description
-Atuin replaces your existing shell history with a SQLite database,
-and records additional context for your commands.
-Additionally, it provides optional and fully encrypted synchronisation
-of your history between machines, via an Atuin server.
+procs is a replacement for ps written in Rust.
 
 %prep
 %autosetup -n %{name}-%{version}
