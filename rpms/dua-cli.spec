@@ -56,7 +56,7 @@ cargo build --release --verbose --locked  --no-default-features --features tui-c
 install -d %{buildroot}%{_bindir}
 
 # Install binary
-install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
+install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/dua %{buildroot}%{_bindir}/dua
 
 %files
 %{_bindir}/%{name}
