@@ -75,6 +75,7 @@ cp -a %{_builddir}/usr/share/blesh %{buildroot}%{_datadir}/
 %{_datadir}/blesh
 
 %post
+echo 'LANG=en_US.utf8' >> /etc/profile.d/atuin.sh
 echo 'source -- /usr/share/blesh/ble.sh' >> /etc/profile.d/atuin.sh
 echo 'eval "$(atuin init bash)" >> /dev/null' >> /etc/profile.d/atuin.sh
 
