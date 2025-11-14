@@ -67,8 +67,8 @@ install -d %{buildroot}%{_datadir}/blesh
 # Install binary
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
 
-#install ble.sh
-install -D -m 644 %{_builddir}%{_datadir}/blesh %{buildroot}%{_datadir}/blesh
+# Install ble.sh directory and its contents
+cp -a %{_builddir}/usr/share/blesh %{buildroot}%{_datadir}/
 
 %files
 %{_bindir}/%{name}
