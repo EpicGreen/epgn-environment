@@ -1,11 +1,25 @@
-Name:           epgn-environment
-Version:        1.2.3
-Release:        4%{?dist}
-Summary:        Installs shell scripts in /etc/profile.d/
-License:        GPLv3-only
-Source0:        https://github.com/EpicGreen/epgn-environment/archive/refs/tags/v%{version}.tar.gz
+Name:       epgn-environment
+Version:    1.2.3
+Release:    4%{?dist}
+Epoch:      0
+Vendor:     EpicGreen
+Packager:   Ante De Baas
+Summary:    Installs shell scripts in /etc/profile.d/
+License:    GPLv3-only
+Source0:    https://github.com/EpicGreen/epgn-environment/archive/refs/tags/v%{version}.tar.gz
 
-BuildArch:      noarch
+BuildArch:  noarch
+
+Requires:   minmon
+Requires:   pushover
+Requires:   restic-scheduler
+Requires:   sozu
+Requires:   dua-cli
+Requires:   bandwhich
+Requires:   rainfrog
+Requires:   procs
+Requires:   atuin
+Requires:   choose
 
 %description
 Installs scripts used by the EpicGreen project to set up user environments.
