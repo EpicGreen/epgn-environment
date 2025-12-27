@@ -4,6 +4,7 @@ alias less='bat --paging=always'
 alias more='bat --paging=always'
 alias screen='tmux'
 alias terraform='tofu'
+alias witr="witr --no-color"
 alias si='sudo -i'
 alias ls='ls --color=auto'
 alias ll='ls -lat --color=auto'

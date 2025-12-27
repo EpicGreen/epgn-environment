@@ -1,7 +1,6 @@
 Name:       epgn-environment
-Version:    1.2.3
-Release:    4%{?dist}
-Epoch:      0
+Version:    1.3.0
+Release:    1%{?dist}
 Vendor:     EpicGreen
 Packager:   Ante De Baas
 Summary:    Installs shell scripts in /etc/profile.d/
@@ -20,6 +19,8 @@ Requires:   rainfrog
 Requires:   procs
 Requires:   atuin
 Requires:   choose
+Requires:   witr
+Requires:   snitch
 
 %description
 Installs scripts used by the EpicGreen project to set up user environments.
@@ -42,6 +43,7 @@ install -D -m 0644 profile.d/epgn-prompt.sh %{buildroot}/etc/profile.d/epgn-prom
 
 install -D -m 0755 scripts/hetzner_dns_hook.sh %{buildroot}/usr/bin/hetzner_dns_hook
 install -D -m 0755 scripts/transip_dns_hook.sh %{buildroot}/usr/bin/transip_dns_hook
+install -D -m 0755 scripts/epgn.sh %{buildroot}/usr/bin/epgn
 
 %files
 /etc/skel/.config/helix/config.toml
@@ -53,8 +55,13 @@ install -D -m 0755 scripts/transip_dns_hook.sh %{buildroot}/usr/bin/transip_dns_
 /etc/profile.d/epgn-prompt.sh
 /usr/bin/hetzner_dns_hook
 /usr/bin/transip_dns_hook
+/usr/bin/epgn
 
 %changelog
+* Sat Dec 27 2025 Ante <antedebaas@users.github.com> - 1.3.0-1
+- added witr and snitch to requirements
+- updated aliases
+
 * Sat Nov 01 2025 Ante <antedebaas@users.github.com> - 1.2.3-1
 - Updated hetzner_dns_hook and transip_dns_hook scripts
 
