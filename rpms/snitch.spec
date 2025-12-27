@@ -32,11 +32,10 @@ snitch is a friendlier alternative to ss/netstat for humans. It lets you inspect
 %autosetup -n %{name}-%{version}
 
 %build
-mkdir -p %{buildroot}/go25.5.linux-amd64
-curl --proto '=https' --tlsv1.2 -sSf https://dl.google.com/go/go1.25.5.linux-amd64.tar.gz | tar -C %{buildroot}/go25.5.linux-amd64 -xz
+curl --proto '=https' --tlsv1.2 -sSf https://dl.google.com/go/go1.25.5.linux-amd64.tar.gz | tar -C %{_tmppath} -xz
 export CGO_ENABLED=0
 export GOFLAGS="-buildvcs=false"
-%{buildroot}/go25.5.linux-amd64/go/bin/go build -v -o snitch .
+%{_tmppath}/go/bin/go build -v -o snitch .
 
 %install
 install -d %{buildroot}%{_bindir}
