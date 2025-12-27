@@ -34,11 +34,10 @@ Useful for debugging, incident response, and understanding system state.
 %autosetup -n %{name}-%{version}
 
 %build
-mkdir -p %{_tmppath}/go25.5.linux-amd64
-curl --proto '=https' --tlsv1.2 -sSf https://dl.google.com/go/go1.25.5.linux-amd64.tar.gz | tar -C %{_tmppath}/go25.5.linux-amd64 -xz
+curl --proto '=https' --tlsv1.2 -sSf https://dl.google.com/go/go1.25.5.linux-amd64.tar.gz | tar -C %{_tmppath} -xz
 export CGO_ENABLED=0
 export GOFLAGS="-buildvcs=false"
-%{_tmppath}/usr/local/go/bin/go build -v -o witr ./cmd/witr
+%{_tmppath}/go/bin/go build -v -o witr ./cmd/witr
 
 %install
 install -d %{buildroot}%{_bindir}
