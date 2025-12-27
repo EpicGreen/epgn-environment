@@ -36,10 +36,9 @@ Useful for debugging, incident response, and understanding system state.
 %build
 mkdir -p %{buildroot}/usr/local/go/bin
 curl --proto '=https' --tlsv1.2 -sSf https://dl.google.com/go/go1.25.5.linux-amd64.tar.gz | tar -C %{buildroot}/usr/local/go/bin -xz
-export PATH=$PATH:%{buildroot}/usr/local/go/bin
 export CGO_ENABLED=0
 export GOFLAGS="-buildvcs=false"
-go build -v -o witr ./cmd/witr
+%{buildroot}/usr/local/go/bin/go build -v -o witr ./cmd/witr
 
 %install
 install -d %{buildroot}%{_bindir}
