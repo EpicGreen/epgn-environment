@@ -7,7 +7,6 @@ License:        Apache-2.0
 URL:            https://github.com/pranshuparmar/witr
 Source0:        https://github.com/pranshuparmar/witr/archive/refs/tags/v%{version}.tar.gz
 
-BuildRequires:  golang >= 1.18
 BuildRequires:  make
 BuildRequires:  gcc
 BuildRequires:  systemd-rpm-macros
