@@ -1,5 +1,5 @@
 Name:       epgn-environment
-Version:    1.3.0
+Version:    1.3.1
 Release:    1%{?dist}
 Vendor:     EpicGreen
 Packager:   Ante De Baas
@@ -12,7 +12,6 @@ BuildArch:  noarch
 Requires:   minmon
 Requires:   pushover
 Requires:   restic-scheduler
-Requires:   sozu
 Requires:   dua-cli
 Requires:   bandwhich
 Requires:   rainfrog
@@ -75,6 +74,6 @@ install -D -m 0755 scripts/epgn.sh %{buildroot}/usr/bin/epgn
 - Added hetzner_dns_hook script installation
 - Updated helix config installation paths
 - Improved file permissions for installed scripts
-
+minmon
 * Thu Oct 23 2025 Ante <antedebaas@users.github.com> - 1.0.0-1
 - Initial package

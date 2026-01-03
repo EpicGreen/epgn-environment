@@ -7,6 +7,9 @@ fi
 
 if [[ "$1" == "provides" ]]; then
     SPEC_FILES=(
+        "minmon"
+        "pushover"
+        "restic-scheduler"
         "atuin"
         "bandwhich"
         "choose"
