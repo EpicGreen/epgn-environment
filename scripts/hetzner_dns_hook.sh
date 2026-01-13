@@ -92,7 +92,7 @@ if [[ "$1" = "create" ]]; then
             exit 1
         fi
     fi
-    sleep 10
+    sleep 30
     exit 0
 elif [[ "$1" = "cleanup" ]]; then
     if [ "$USE" = "API" ]; then

@@ -63,7 +63,7 @@ if [[ "$1" = "create" ]]; then
         echo "Failed to create DNS record. HTTP status code: $RESPONSE"
         exit 1
     fi
-    sleep 10
+    sleep 30
     exit 0
 elif [[ "$1" = "cleanup" ]]; then
     RESPONSE=$(curl -s --write-out '%{http_code}' --output /dev/null -X DELETE \

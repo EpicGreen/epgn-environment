@@ -1,5 +1,5 @@
 Name:       epgn-environment
-Version:    1.3.1
+Version:    1.3.2
 Release:    1%{?dist}
 Vendor:     EpicGreen
 Packager:   Ante De Baas
@@ -57,6 +57,9 @@ install -D -m 0755 scripts/epgn.sh %{buildroot}/usr/bin/epgn
 /usr/bin/epgn
 
 %changelog
+* Tue Jan 13 2026 Ante <antedebaas@users.github.com> - 1.3.2-1
+- Updated *_dns_hook propogation time.
+
 * Sat Dec 27 2025 Ante <antedebaas@users.github.com> - 1.3.0-1
 - added witr and snitch to requirements
 - updated aliases
