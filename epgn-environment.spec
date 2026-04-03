@@ -1,6 +1,6 @@
 Name:       epgn-environment
 Version:    1.3.2
-Release:    1%{?dist}
+Release:    2%{?dist}
 Vendor:     EpicGreen
 Packager:   Ante De Baas
 Summary:    Installs shell scripts in /etc/profile.d/
@@ -57,6 +57,9 @@ install -D -m 0755 scripts/epgn.sh %{buildroot}/usr/bin/epgn
 /usr/bin/epgn
 
 %changelog
+* Sat Apr 4 2026 Ante de Baas <antedebaas@users.github.com> - 1.3.2-2
+- update hetzner_dns_hook
+
 * Tue Jan 13 2026 Ante <antedebaas@users.github.com> - 1.3.2-1
 - Updated *_dns_hook propogation time.
 

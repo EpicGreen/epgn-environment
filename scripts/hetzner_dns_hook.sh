@@ -86,7 +86,7 @@ if [[ "$1" = "create" ]]; then
             exit 1
         fi
     else
-        $(hcloud zone rrset create ${ZONE} --name ${RECORD} --type TXT --ttl 60 --record "\"${CERTBOT_VALIDATION}\"")
+        hcloud --quiet zone rrset create ${ZONE} --name ${RECORD} --type TXT --ttl 60 --record "\"${CERTBOT_VALIDATION}\""
         if [ $? -ne 0 ]; then
             echo "Failed to create DNS record."
             exit 1
@@ -104,7 +104,7 @@ elif [[ "$1" = "cleanup" ]]; then
             exit 1
         fi
     else
-        hcloud zone rrset delete ${ZONE} ${RECORD} TXT
+        hcloud --quiet zone rrset delete ${ZONE} ${RECORD} TXT
         if [ $? -ne 0 ]; then
             echo "Failed to delete DNS record."
             exit 1

@@ -1,6 +1,6 @@
 Name:           atuin
-Version:        18.10.0
-Release:        2%{?dist}
+Version:        18.13.6
+Release:        1%{?dist}
 Summary:        Magical shell history
 
 License:        MIT
@@ -83,5 +83,8 @@ echo 'eval "$(atuin init bash)" >> /dev/null' >> /etc/profile.d/atuin.sh
 rm -f /etc/profile.d/atuin.sh
 
 %changelog
+* Sat Apr 4 2026 Ante de Baas <antedebaas@users.github.com> - 18.13.6
+- update version
+
 * Thu Nov 13 2025 Ante de Baas <antedebaas@users.github.com> - 18.10.0-2
 - initial package
