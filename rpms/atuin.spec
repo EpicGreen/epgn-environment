@@ -1,6 +1,6 @@
 Name:           atuin
 Version:        18.13.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Magical shell history
 
 License:        MIT
@@ -66,6 +66,7 @@ install -d %{buildroot}%{_datadir}/blesh
 
 # Install binary
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
+install -D -m 0644 profile.d/atuin.sh %{buildroot}/etc/profile.d/atuin.sh
 
 # Install ble.sh directory and its contents
 cp -a %{_builddir}/usr/share/blesh %{buildroot}%{_datadir}/
@@ -73,14 +74,7 @@ cp -a %{_builddir}/usr/share/blesh %{buildroot}%{_datadir}/
 %files
 %{_bindir}/%{name}
 %{_datadir}/blesh
-
-%post
-echo 'LANG=en_US.utf8' >> /etc/profile.d/atuin.sh
-echo 'source -- /usr/share/blesh/ble.sh' >> /etc/profile.d/atuin.sh
-echo 'eval "$(atuin init bash)" >> /dev/null' >> /etc/profile.d/atuin.sh
-
-%postun
-rm -f /etc/profile.d/atuin.sh
+/etc/profile.d/atuin.sh
 
 %changelog
 * Sat Apr 4 2026 Ante de Baas <antedebaas@users.github.com> - 18.13.6
