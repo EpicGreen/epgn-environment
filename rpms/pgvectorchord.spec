@@ -4,12 +4,6 @@
 %global sname VectorChord
 %global pgversion 16
 
-%ifarch ppc64 ppc64le s390 s390x armv7hl
-	%{!?llvm:%global llvm 0}
-%else
-	%{!?llvm:%global llvm 0}
-%endif
-
 Name:		postgresql%{pgversion}-%{sname}
 Version:	1.1.1
 Release:	1%{?dist}
@@ -26,7 +20,7 @@ Summary: VectorChord (vchord) is a PostgreSQL extension engineered for scalable,
 %global pkgname %name
 %endif
 
-BuildRequires:	make gcc
+BuildRequires:	make gcc cargo rust
 BuildRequires:	postgresql%{pgversion}-server-devel
 Requires:	postgresql%{pgversion}-server
 
@@ -49,17 +43,6 @@ inner product, and cosine distance
 Open-source vector similarity search for Postgres. Supports L2 distance,
 inner product, and cosine distance
 
-%if %llvm
-%package -n %{pkgname}-llvmjit
-Summary:	Just-in-time compilation support for pgvector
-Requires:	%{pkgname}%{?_isa} = %precise_version
-Requires:	llvm => 13.0
-BuildRequires: cargo
-
-%description -n %{pkgname}-llvmjit
-This packages provides JIT support for pgvector
-%endif
-
 %prep
 %setup -q -n %{sname}-%{version}
 
@@ -78,11 +61,6 @@ This packages provides JIT support for pgvector
 %{_libdir}/pgsql/%{pname}.so
 %{_datadir}/pgsql/extension//%{pname}.control
 %{_datadir}/pgsql/extension/%{pname}*sql
-%if %llvm
-%files -n %{pkgname}-llvmjit
-%{_libdir}/pgsql/bitcode/%{pname}*.bc
-%{_libdir}/pgsql/bitcode/%{pname}/src/*.bc
-%endif
 
 %changelog
 * Tue Apr 21 2026 <a.debaas@epicgreen.nl> - 1.1.1-1
