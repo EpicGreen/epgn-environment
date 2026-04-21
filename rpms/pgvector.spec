@@ -70,6 +70,8 @@ This packages provides JIT support for pgvector
 
 #Remove header file, we don't need it right now:
 %{__rm} %{buildroot}/%{_includedir}/pgsql/server/extension/%{pname}/%{pname}.h
+%{__rm} %{buildroot}/%{_includedir}/pgsql/server/extension/%{pname}/halfvec.h
+%{__rm} %{buildroot}/%{_includedir}/pgsql/server/extension/%{pname}/sparsevec.h
 
 %files -n %{pkgname}
 %doc README.md
