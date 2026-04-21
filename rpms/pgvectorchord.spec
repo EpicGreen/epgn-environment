@@ -1,7 +1,8 @@
 %{!?postgresql_default:%global postgresql_default 1}
 
-%global pname vector
-%global sname pgvector
+%global pname vchord
+%global sname VectorChord
+%glocal rname tensorchord
 %global pgversion 16
 
 %ifarch ppc64 ppc64le s390 s390x armv7hl
@@ -11,17 +12,17 @@
 %endif
 
 Name:		postgresql%{pgversion}-%{sname}
-Version:	0.8.2
+Version:	1.1.1
 Release:	1%{?dist}
-Summary:	Open-source vector similarity search for Postgres
-License:	PostgreSQL
-URL:		https://github.com/%{sname}/%{sname}/
-Source0:	https://github.com/%{sname}/%{sname}/archive/refs/tags/v%{version}.tar.gz
+Summary:	Scalable, fast, and disk-friendly vector search in Postgres, the successor of pgvecto.rs.
+License:	AGPLv3
+URL:		https://github.com/%{rname}/%{sname}/
+Source0:	https://github.com/%{rname}/%{sname}/archive/refs/tags/v%{version}.tar.gz
 
 %if %?postgresql_default
-%global pkgname %{sname}
+%global pkgname %{pname}
 %package -n %{pkgname}
-Summary: Reorganize tables in PostgreSQL databases without any locks
+Summary: VectorChord (vchord) is a PostgreSQL extension engineered for scalable, high-performance, and cost-effective vector search.
 %else
 %global pkgname %name
 %endif
@@ -33,13 +34,13 @@ Requires:	postgresql%{pgversion}-server
 %global precise_version %{?epoch:%epoch:}%version-%release
 
 %if %?postgresql_default
-Provides: postgresql-%{sname} = %precise_version
+Provides: postgresql-%{pname} = %precise_version
 Provides: %name = %precise_version
 %endif
 Provides: %{pkgname}%{?_isa} = %precise_version
 Provides: %{pkgname} = %precise_version
-Provides: %{sname}-any
-Conflicts: %{sname}-any
+Provides: %{pname}-any
+Conflicts: %{pname}-any
 
 %description
 Open-source vector similarity search for Postgres. Supports L2 distance,
@@ -60,7 +61,7 @@ This packages provides JIT support for pgvector
 %endif
 
 %prep
-%setup -q -n %{sname}-%{version}
+%setup -q -n %{pname}-%{version}
 
 %build
 %make_build %{?_smp_mflags} OPTFLAGS=""
@@ -70,8 +71,6 @@ This packages provides JIT support for pgvector
 
 #Remove header file, we don't need it right now:
 %{__rm} %{buildroot}/%{_includedir}/pgsql/server/extension/%{pname}/%{pname}.h
-%{__rm} %{buildroot}/%{_includedir}/pgsql/server/extension/%{pname}/halfvec.h
-%{__rm} %{buildroot}/%{_includedir}/pgsql/server/extension/%{pname}/sparsevec.h
 
 %files -n %{pkgname}
 %doc README.md
@@ -88,19 +87,3 @@ This packages provides JIT support for pgvector
 %changelog
 * Tue Apr 21 2026 <a.debaas@epicgreen.nl> - 0.8.2-1
 - Test package for 0.8.2
-
-%changelog
-* Wed Jan 22 2025 Lukas Javorsky <ljavorsk@redhat.com> - 0.6.2-4
-- Release bump
-- Related: RHEL-73444
-
-* Mon Jan 20 2025 Filip Janus <fjanus@redhat.com> - 0.6.2-3
-- Enable Portable build
-- Resolves: RHEL-73444
-
-* Tue Oct 29 2024 Troy Dawson <tdawson@redhat.com> - 0.6.2-2
-- Bump release for October 2024 mass rebuild:
-  Resolves: RHEL-64018
-
-* Mon Mar 25 2024 Filip Janus <fjanus@redhat.com> - 0.6.2-1
-- Initial packaging
