@@ -4,7 +4,7 @@
 %global sname VectorChord
 %global pgversion 16
 
-Name:		postgresql%{pgversion}-%{sname}
+Name:		postgresql%{pgversion}-%{pname}
 Version:	1.1.1
 Release:	1%{?dist}
 Summary:	Scalable, fast, and disk-friendly vector search in Postgres, the successor of pgvecto.rs.
