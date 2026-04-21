@@ -2,7 +2,6 @@
 
 %global pname vchord
 %global sname VectorChord
-%glocal rname tensorchord
 %global pgversion 16
 
 %ifarch ppc64 ppc64le s390 s390x armv7hl
@@ -16,8 +15,8 @@ Version:	1.1.1
 Release:	1%{?dist}
 Summary:	Scalable, fast, and disk-friendly vector search in Postgres, the successor of pgvecto.rs.
 License:	AGPLv3
-URL:		https://github.com/%{rname}/%{sname}/
-Source0:	https://github.com/%{rname}/%{sname}/archive/refs/tags/v%{version}.tar.gz
+URL:		https://github.com/tensorchord/%{sname}/
+Source0:	https://github.com/tensorchord  /%{sname}/archive/refs/tags/v%{version}.tar.gz
 
 %if %?postgresql_default
 %global pkgname %{pname}
