@@ -54,6 +54,7 @@ inner product, and cosine distance
 Summary:	Just-in-time compilation support for pgvector
 Requires:	%{pkgname}%{?_isa} = %precise_version
 Requires:	llvm => 13.0
+BuildRequires: cargo
 
 %description -n %{pkgname}-llvmjit
 This packages provides JIT support for pgvector
