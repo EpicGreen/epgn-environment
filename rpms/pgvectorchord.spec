@@ -60,7 +60,7 @@ This packages provides JIT support for pgvector
 %endif
 
 %prep
-%setup -q -n %{pname}-%{version}
+%setup -q -n %{sname}-%{version}
 
 %build
 %make_build %{?_smp_mflags} OPTFLAGS=""
