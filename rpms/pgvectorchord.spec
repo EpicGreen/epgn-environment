@@ -85,5 +85,5 @@ This packages provides JIT support for pgvector
 %endif
 
 %changelog
-* Tue Apr 21 2026 <a.debaas@epicgreen.nl> - 0.8.2-1
-- Test package for 0.8.2
+* Tue Apr 21 2026 <a.debaas@epicgreen.nl> - 1.1.1-1
+- Test package for 1.1.1
