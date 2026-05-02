@@ -6,6 +6,7 @@ Summary:        Magical shell history
 License:        MIT
 URL:            https://github.com/atuinsh/%{name}
 Source0:        https://github.com/atuinsh/%{name}/archive/refs/tags/v%{version}.tar.gz
+Source1:        https://github.com/EpicGreen/epgn-environment/archive/refs/tags/v%{version}.tar.gz
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
