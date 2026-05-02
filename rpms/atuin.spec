@@ -66,7 +66,7 @@ install -d %{buildroot}%{_datadir}/blesh
 
 # Install binary
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
-install -D -m 0644 profile.d/atuin.sh %{buildroot}/etc/profile.d/atuin.sh
+install -D -m 644 %{_builddir}/profile.d/atuin.sh %{buildroot}/etc/profile.d/atuin.sh
 
 # Install ble.sh directory and its contents
 cp -a %{_builddir}/usr/share/blesh %{buildroot}%{_datadir}/
