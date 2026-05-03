@@ -3,9 +3,12 @@ Version:        18.13.6
 Release:        2%{?dist}
 Summary:        Magical shell history
 
+%global epgn_version 1.3.3
+
 License:        MIT
 URL:            https://github.com/atuinsh/%{name}
 Source0:        https://github.com/atuinsh/%{name}/archive/refs/tags/v%{version}.tar.gz
+Source1:        https://github.com/EpicGreen/epgn-environment/archive/refs/tags/v%{epgn_version}.tar.gz
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -14,6 +17,8 @@ BuildRequires:  systemd-rpm-macros
 BuildRequires:  pkgconfig(openssl)
 BuildRequires:  make
 BuildRequires:  git
+BuildRequires:  curl
+BuildRequires:  cargo
 
 # Only build on supported architectures for Rust
 ExcludeArch:    i686 s390 %{power64}
@@ -28,11 +33,6 @@ ExcludeArch:    i686 s390 %{power64}
 %global debug_package %{nil}
 
 Requires:       glibc
-BuildRequires:  cargo
-BuildRequires:  cpp
-BuildRequires:  gcc
-BuildRequires:  gcc-c++
-BuildRequires:  make
 
 %description
 Atuin replaces your existing shell history with a SQLite database,
@@ -42,6 +42,8 @@ of your history between machines, via an Atuin server.
 
 %prep
 %autosetup -n %{name}-%{version}
+# Extract epgn-environment source
+tar -xzf %{SOURCE1} -C %{_builddir}
 
 %build
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -67,15 +69,8 @@ install -d %{buildroot}%{_datadir}/blesh
 # Install binairy
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
 
-#create and install profile.d script
-install -D -m 644 /dev/null %{buildroot}/etc/profile.d/atuin.sh
-cat << 'EOF' > %{buildroot}/etc/profile.d/atuin.sh
-LANG=en_US.utf8
-if [ -f /usr/share/blesh/ble.sh ]; then
-    source -- /usr/share/blesh/ble.sh
-fi
-eval "$(atuin init bash)" >> /dev/null
-EOF
+#copy profile.d scripts from epgn-environment
+install -D -m 644 %{_builddir}/epgn-environment-%{epgn_version}/profile.d/atuin.sh %{buildroot}/etc/profile.d/atuin.sh
 
 # Install ble.sh directory and its contents
 cp -a %{_builddir}/usr/share/blesh %{buildroot}%{_datadir}/
