@@ -1,5 +1,5 @@
 Name:       epgn-environment
-Version:    1.3.2
+Version:    1.3.3
 Release:    2%{?dist}
 Vendor:     EpicGreen
 Packager:   Ante De Baas
@@ -57,6 +57,9 @@ install -D -m 0755 scripts/epgn.sh %{buildroot}/usr/bin/epgn
 /usr/bin/epgn
 
 %changelog
+* Sun May 3 2026 Ante de Baas <antedebaas@users.github.com> - 1.3.3
+- refactor atuin rpm
+
 * Sat Apr 4 2026 Ante de Baas <antedebaas@users.github.com> - 1.3.2-2
 - update hetzner_dns_hook
 
