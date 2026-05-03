@@ -6,7 +6,7 @@ Summary:        Magical shell history
 License:        MIT
 URL:            https://github.com/atuinsh/%{name}
 Source0:        https://github.com/atuinsh/%{name}/archive/refs/tags/v%{version}.tar.gz
-Source1:        https://github.com/EpicGreen/epgn-environment/archive/refs/tags/v%{version}.tar.gz
+Source1:        https://github.com/EpicGreen/epgn-environment/archive/refs/tags/v1.3.2.tar.gz
 
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
@@ -43,6 +43,8 @@ of your history between machines, via an Atuin server.
 
 %prep
 %autosetup -n %{name}-%{version}
+# Extract epgn-environment source
+tar -xzf %{SOURCE1} -C %{_builddir}
 
 %build
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -69,7 +71,7 @@ install -d %{buildroot}%{_datadir}/blesh
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
 
 #copy profile.d scripts
-install -D -m 644 profile.d/atuin.sh %{buildroot}/etc/profile.d/atuin.sh
+install -D -m 644 %{_builddir}/epgn-environment-1.3.2/profile.d/atuin.sh %{buildroot}/etc/profile.d/atuin.sh
 
 # Install ble.sh directory and its contents
 cp -a %{_builddir}/usr/share/blesh %{buildroot}%{_datadir}/
