@@ -3,7 +3,7 @@ Version:        18.13.6
 Release:        2%{?dist}
 Summary:        Magical shell history
 
-%global epgn_version 1.3.3
+%global epgn_version 1.3.4
 
 License:        MIT
 URL:            https://github.com/atuinsh/%{name}
