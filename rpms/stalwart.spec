@@ -19,7 +19,7 @@ BuildRequires:  make
 BuildRequires:  git
 BuildRequires:  curl
 BuildRequires:  cargo
-BuildRequires:  clang19-libs clang19-libs-19
+BuildRequires:  clang19-devel clang19-libs
 
 # Only build on supported architectures for Rust
 ExcludeArch:    i686 s390 %{power64}
