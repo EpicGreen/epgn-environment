@@ -88,5 +88,5 @@ chown %{name}:%{name} %{_sharedstatedir}/%{name}
 %{_unitdir}/%{name}.service
 
 %changelog
-* Fri May 4 2026 Ante de Baas <antedebaas@users.github.com> - 1.43.0
+* Fri May 8 2026 Ante de Baas <antedebaas@users.github.com> - 1.43.0
 - inital
