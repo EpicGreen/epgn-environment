@@ -64,27 +64,41 @@ getent passwd %{name} >/dev/null || \
     -s /sbin/nologin -c "%{name}" %{name}
 
 %install
+# Install binary
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
+
+# Install config file
 install -D -m 644 %{_builddir}/epgn-environment-%{epgn_version}/configs/%{name}.json %{buildroot}%{_sysconfdir}/%{name}.json
+
+# Install systemd service
 install -D -m 644 %{_builddir}/epgn-environment-%{epgn_version}/configs/%{name}.service %{buildroot}%{_unitdir}/%{name}.service
 
-%post
-chown -R %{name}:%{name} /var/lib/%{name}
+# Create data directories
+install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}
+install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/data
+install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/dumps
+install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/snapshots
 
-if grep -q "# master_key = \"YOUR_MASTER_KEY_VALUE\"" %{_sysconfdir}/%{name}.toml; then
-    RANDOM_KEY=$(uuidgen)
-    sed -i "s/# master_key = \"YOUR_MASTER_KEY_VALUE\"/master_key = \"$RANDOM_KEY\"/" %{_sysconfdir}/%{name}.toml
-fi
-chown %{name}:%{name} %{_sharedstatedir}/%{name}
+%post
+# Set ownership of data directory
+chown -R %{name}:%{name} %{_sharedstatedir}/%{name}
+chown %{name}:%{name} %{_sysconfdir}/%{name}.json
+
 %systemd_post %{name}.service
+
+%preun
+%systemd_preun %{name}.service
+
+%postun
+%systemd_postun_with_restart %{name}.service
 
 %files
 %{_bindir}/%{name}
-%{_sharedstatedir}/%{name}
-%{_sharedstatedir}/%{name}/data
-%{_sharedstatedir}/%{name}/dumps
-%{_sharedstatedir}/%{name}/snapshots
-%config(noreplace) %{_sysconfdir}/%{name}.toml
+%dir %attr(0755,%{name},%{name}) %{_sharedstatedir}/%{name}
+%dir %attr(0755,%{name},%{name}) %{_sharedstatedir}/%{name}/data
+%dir %attr(0755,%{name},%{name}) %{_sharedstatedir}/%{name}/dumps
+%dir %attr(0755,%{name},%{name}) %{_sharedstatedir}/%{name}/snapshots
+%config(noreplace) %attr(0644,%{name},%{name}) %{_sysconfdir}/%{name}.json
 %{_unitdir}/%{name}.service
 
 %changelog
