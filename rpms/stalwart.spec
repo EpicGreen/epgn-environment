@@ -40,8 +40,8 @@ All-in-one Mail & Collaboration server. Secure, scalable and fluent in every pro
 
 %prep
 %autosetup -n %{name}-%{version}
-### Extract epgn-environment source
-###tar -xzf %{SOURCE1} -C %{_builddir}
+# Extract epgn-environment source
+tar -xzf %{SOURCE1} -C %{_builddir}
 
 %build
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
