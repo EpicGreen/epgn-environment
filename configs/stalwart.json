@@ -1,0 +1,21 @@
+{
+  "@type": "PostgreSql",
+  "timeout": "15s",
+  "useTls": false,
+  "allowInvalidCerts": false,
+  "poolMaxConnections": 10,
+  "poolRecyclingMethod": "fast",
+  "host": "localhost",
+  "port": 5432,
+  "database": "stalwart",
+  "authUsername": "stalwart",
+  "authSecret":
+    {
+      "@type": "SecretKeyOptional",
+      "value": {
+        "type": "SecretKeyValue",
+          "secret": "__STALWART_DB_SECRET__"
+      }
+    },
+  "options": null
+}

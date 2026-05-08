@@ -1,9 +1,9 @@
 Name:           atuin
 Version:        18.13.6
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Magical shell history
 
-%global epgn_version 1.3.4
+%global epgn_version 1.3.5
 
 License:        MIT
 URL:            https://github.com/atuinsh/%{name}

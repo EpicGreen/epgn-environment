@@ -1,13 +1,13 @@
-Name:           meilisearch
-Version:        1.43.0
-Release:        2%{?dist}
-Summary:        A lightning-fast search engine API bringing AI-powered hybrid search to your sites and applications.
+Name:           stallwart
+Version:        0.16.4
+Release:        1%{?dist}
+Summary:        All-in-one Mail & Collaboration server. Secure, scalable and fluent in every protocol (IMAP, JMAP, SMTP, CalDAV, CardDAV, WebDAV).
 
-%global epgn_version 1.3.5
+%global epgn_version 1.3.4
 
 License:        MIT
-URL:            https://github.com/meilisearch/%{name}
-Source0:        https://github.com/meilisearch/%{name}/archive/refs/tags/v%{version}.tar.gz
+URL:            https://github.com/stalwartlabs/%{name}
+Source0:        https://github.com/stalwartlabs/%{name}/archive/refs/tags/v%{version}.tar.gz
 Source1:        https://github.com/EpicGreen/epgn-environment/archive/refs/tags/v%{epgn_version}.tar.gz
 
 BuildRequires:  gcc
@@ -35,12 +35,12 @@ ExcludeArch:    i686 s390 %{power64}
 Requires:       glibc
 
 %description
-A lightning-fast search engine API bringing AI-powered hybrid search to your sites and applications.
+All-in-one Mail & Collaboration server. Secure, scalable and fluent in every protocol (IMAP, JMAP, SMTP, CalDAV, CardDAV, WebDAV).
 
 %prep
 %autosetup -n %{name}-%{version}
-# Extract epgn-environment source
-tar -xzf %{SOURCE1} -C %{_builddir}
+### Extract epgn-environment source
+###tar -xzf %{SOURCE1} -C %{_builddir}
 
 %build
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -63,12 +63,8 @@ getent passwd %{name} >/dev/null || \
     -s /sbin/nologin -c "%{name}" %{name}
 
 %install
-install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}
-install -d %{buildroot}%{_sharedstatedir}/%{name}/data
-install -d %{buildroot}%{_sharedstatedir}/%{name}/dumps
-install -d %{buildroot}%{_sharedstatedir}/%{name}/snapshots
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
-install -D -m 644 %{_builddir}/epgn-environment-%{epgn_version}/configs/%{name}.toml %{buildroot}%{_sysconfdir}/%{name}.toml
+install -D -m 644 %{_builddir}/epgn-environment-%{epgn_version}/configs/%{name}.json %{buildroot}%{_sysconfdir}/%{name}.json
 install -D -m 644 %{_builddir}/epgn-environment-%{epgn_version}/configs/%{name}.service %{buildroot}%{_unitdir}/%{name}.service
 
 %post
