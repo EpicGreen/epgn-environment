@@ -19,7 +19,7 @@ BuildRequires:  make
 BuildRequires:  git
 BuildRequires:  curl
 BuildRequires:  cargo
-BuildRequires:  rocksdb
+BuildRequires:  clang20-libs
 
 # Only build on supported architectures for Rust
 ExcludeArch:    i686 s390 %{power64}
