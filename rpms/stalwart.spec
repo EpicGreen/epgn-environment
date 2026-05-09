@@ -15,7 +15,7 @@ BuildRequires:  gcc-c++
 BuildRequires:  openssl-devel
 BuildRequires:  systemd-rpm-macros
 BuildRequires:  pkgconfig(openssl)
-BuildRequires:  make
+BuildRequires:  make cmake
 BuildRequires:  git
 BuildRequires:  curl
 BuildRequires:  cargo
