@@ -3,7 +3,7 @@ Version:        0.16.4
 Release:        2%{?dist}
 Summary:        All-in-one Mail & Collaboration server. Secure, scalable and fluent in every protocol (IMAP, JMAP, SMTP, CalDAV, CardDAV, WebDAV).
 
-%global epgn_version 1.3.7
+%global epgn_version 1.3.8
 
 License:        MIT
 URL:            https://github.com/stalwartlabs/%{name}
@@ -55,7 +55,7 @@ export RUSTFLAGS="-Ccodegen-units=1 -Clink-dead-code=off"
 [ -f Cargo.lock ] || cargo generate-lockfile
 
 # Build with release optimizations
-cargo build --release --verbose --locked --features postgres s3 redis elastic kafka
+cargo build --release --verbose --locked --features "postgres s3 redis elastic kafka"
 
 %pre
 getent group %{name} >/dev/null || groupadd -r %{name}
