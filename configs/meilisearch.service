@@ -1,12 +1,13 @@
 [Unit]
-Description=Stallwart mail server
+Description=Meilisearch
 After=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/stalwart --config /etc/stalwart/config.json
-User=stallwart
-Group=stallwart
+WorkingDirectory=/var/lib/meilisearch
+ExecStart=/bin/meilisearch --no-analytics --config-file-path /etc/meilisearch.toml
+User=meilisearch
+Group=meilisearch
 Restart=on-failure
 
 [Install]

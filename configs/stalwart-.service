@@ -1,0 +1,13 @@
+[Unit]
+Description=Stalwart mail server
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/bin/stalwart --config /etc/stalwart/config.json
+User=stallwart
+Group=stallwart
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

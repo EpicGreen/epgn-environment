@@ -71,8 +71,18 @@ install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{build
 install -D -m 644 %{_builddir}/epgn-environment-%{epgn_version}/configs/%{name}.toml %{buildroot}%{_sysconfdir}/%{name}.toml
 install -D -m 644 %{_builddir}/epgn-environment-%{epgn_version}/configs/%{name}.service %{buildroot}%{_unitdir}/%{name}.service
 
+# Install systemd service
+install -D -m 644 %{_builddir}/epgn-environment-%{epgn_version}/configs/%{name}.service %{buildroot}%{_unitdir}/%{name}.service
+
 %post
 chown -R %{name}:%{name} /var/lib/%{name}
+%systemd_post %{name}.service
+
+%preun
+%systemd_preun %{name}.service
+
+%postun
+%systemd_postun_with_restart %{name}.service
 
 if grep -q "# master_key = \"YOUR_MASTER_KEY_VALUE\"" %{_sysconfdir}/%{name}.toml; then
     RANDOM_KEY=$(uuidgen)
