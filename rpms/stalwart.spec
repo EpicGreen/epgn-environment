@@ -17,7 +17,7 @@ BuildRequires:  systemd-rpm-macros
 BuildRequires:  pkgconfig(openssl)
 BuildRequires:  make cmake
 BuildRequires:  git
-BuildRequires:  curl
+BuildRequires:  curl libcurl-devel
 BuildRequires:  cargo
 BuildRequires:  clang19-devel clang19-libs
 
