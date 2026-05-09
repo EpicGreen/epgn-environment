@@ -1,6 +1,6 @@
 {
   "@type": "PostgreSql",
-  "timeout": "15s",
+  "timeout": 15,
   "useTls": false,
   "allowInvalidCerts": false,
   "poolMaxConnections": 10,
@@ -9,13 +9,9 @@
   "port": 5432,
   "database": "stalwart",
   "authUsername": "stalwart",
-  "authSecret":
-    {
-      "@type": "SecretKeyOptional",
-      "value": {
-        "type": "SecretKeyValue",
-          "secret": "__STALWART_DB_SECRET__"
-      }
-    },
+  "authSecret": {
+    "@type": "Value",
+    "secret": "__STALWART_DB_SECRET__"
+  },
   "options": null
 }

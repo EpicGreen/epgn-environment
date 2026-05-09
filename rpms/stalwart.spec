@@ -55,7 +55,7 @@ export RUSTFLAGS="-Ccodegen-units=1 -Clink-dead-code=off"
 [ -f Cargo.lock ] || cargo generate-lockfile
 
 # Build with release optimizations
-cargo build --release --verbose --locked
+cargo build --release --verbose --locked --features postgres s3 redis elastic kafka
 
 %pre
 getent group %{name} >/dev/null || groupadd -r %{name}
