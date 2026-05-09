@@ -1,6 +1,6 @@
 Name:           stalwart
 Version:        0.16.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        All-in-one Mail & Collaboration server. Secure, scalable and fluent in every protocol (IMAP, JMAP, SMTP, CalDAV, CardDAV, WebDAV).
 
 %global epgn_version 1.3.8
@@ -64,25 +64,26 @@ getent passwd %{name} >/dev/null || \
     -s /sbin/nologin -c "%{name}" %{name}
 
 %install
-# Install binary
-install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
-
-# Install config file
-install -D -m 644 %{_builddir}/epgn-environment-%{epgn_version}/configs/%{name}.json %{buildroot}%{_sysconfdir}/%{name}.json
-
-# Install systemd service
-install -D -m 644 %{_builddir}/epgn-environment-%{epgn_version}/configs/%{name}.service %{buildroot}%{_unitdir}/%{name}.service
-
 # Create data directories
+install -d -m 755 %{buildroot}%{_sysconfdir}/%{name}/
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/data
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/dumps
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/snapshots
 
+# Install binary
+install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
+
+# Install config file
+install -D -m 644 %{_builddir}/epgn-environment-%{epgn_version}/configs/%{name}.json %{buildroot}%{_sysconfdir}/%{name}/config.json
+
+# Install systemd service
+install -D -m 644 %{_builddir}/epgn-environment-%{epgn_version}/configs/%{name}.service %{buildroot}%{_unitdir}/%{name}.service
+
 %post
 # Set ownership of data directory
 chown -R %{name}:%{name} %{_sharedstatedir}/%{name}
-chown %{name}:%{name} %{_sysconfdir}/%{name}.json
+chown %{name}:%{name} %{_sysconfdir}/%{name}/config.json
 
 %systemd_post %{name}.service
 
@@ -98,9 +99,9 @@ chown %{name}:%{name} %{_sysconfdir}/%{name}.json
 %dir %attr(0755,%{name},%{name}) %{_sharedstatedir}/%{name}/data
 %dir %attr(0755,%{name},%{name}) %{_sharedstatedir}/%{name}/dumps
 %dir %attr(0755,%{name},%{name}) %{_sharedstatedir}/%{name}/snapshots
-%config(noreplace) %attr(0644,%{name},%{name}) %{_sysconfdir}/%{name}.json
+%config(noreplace) %attr(0644,%{name},%{name}) %{_sysconfdir}/%{name}/config.json
 %{_unitdir}/%{name}.service
 
 %changelog
-* Fri May 8 2026 Ante de Baas <antedebaas@users.github.com> - 1.43.0
+* Sat May 9 2026 Ante de Baas <antedebaas@users.github.com> - 1.43.0-3
 - inital
