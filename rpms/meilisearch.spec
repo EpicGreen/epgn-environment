@@ -1,9 +1,9 @@
 Name:           meilisearch
 Version:        1.43.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A lightning-fast search engine API bringing AI-powered hybrid search to your sites and applications.
 
-%global epgn_version 1.3.6
+%global epgn_version 1.3.7
 
 License:        MIT
 URL:            https://github.com/meilisearch/%{name}
@@ -85,7 +85,7 @@ chown -R %{name}:%{name} /var/lib/%{name}
 %systemd_postun_with_restart %{name}.service
 
 if grep -q "# master_key = \"YOUR_MASTER_KEY_VALUE\"" %{_sysconfdir}/%{name}.toml; then
-    RANDOM_KEY=$(uuidgen)
+    RANDOM_KEY=$(uuidgenFix Meilisearch systemd service and spec file installation)
     sed -i "s/# master_key = \"YOUR_MASTER_KEY_VALUE\"/master_key = \"$RANDOM_KEY\"/" %{_sysconfdir}/%{name}.toml
 fi
 chown %{name}:%{name} %{_sharedstatedir}/%{name}

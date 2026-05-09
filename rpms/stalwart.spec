@@ -1,9 +1,9 @@
 Name:           stalwart
 Version:        0.16.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        All-in-one Mail & Collaboration server. Secure, scalable and fluent in every protocol (IMAP, JMAP, SMTP, CalDAV, CardDAV, WebDAV).
 
-%global epgn_version 1.3.6
+%global epgn_version 1.3.7
 
 License:        MIT
 URL:            https://github.com/stalwartlabs/%{name}
