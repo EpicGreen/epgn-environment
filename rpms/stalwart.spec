@@ -70,6 +70,7 @@ install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/data
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/dumps
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/snapshots
+install -d -m 755 %{buildroot}%{_var}/log/%{name}
 
 # Install binary
 install -D -m 755 %{_builddir}/%{name}-%{version}/target/release/%{name} %{buildroot}%{_bindir}/%{name}
@@ -83,7 +84,9 @@ install -D -m 644 %{_builddir}/epgn-environment-%{epgn_version}/configs/%{name}.
 %post
 # Set ownership of data directory
 chown -R %{name}:%{name} %{_sharedstatedir}/%{name}
+chown %{name}:%{name} %{_sysconfdir}/%{name}
 chown %{name}:%{name} %{_sysconfdir}/%{name}/config.json
+chown %{name}:%{name} %{_var}/log/%{name}
 
 %systemd_post %{name}.service
 
@@ -95,6 +98,7 @@ chown %{name}:%{name} %{_sysconfdir}/%{name}/config.json
 
 %files
 %{_bindir}/%{name}
+%dir %attr(0755,%{name},%{name}) %{_var}/log/%{name}
 %dir %attr(0755,%{name},%{name}) %{_sharedstatedir}/%{name}
 %dir %attr(0755,%{name},%{name}) %{_sharedstatedir}/%{name}/data
 %dir %attr(0755,%{name},%{name}) %{_sharedstatedir}/%{name}/dumps

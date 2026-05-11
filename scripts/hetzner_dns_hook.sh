@@ -57,21 +57,31 @@ DOUBLEDOTTED=("uk" "au" "nz" "za" "in" "br" "ar" "jp" "kr" "pk" "lk" "tr" "il" "
 EXTENTION=$(echo ${CERTBOT_DOMAIN} | rev | cut -d '.' -f 1,1 | rev)
 if [[ " ${DOUBLEDOTTED[@]} " =~ " ${EXTENTION} " ]]; then
     ZONE=$(echo "${CERTBOT_DOMAIN}" | rev | cut -d '.' -f 1-3 | rev)
-    SUBDOMAIN=$(echo "${CERTBOT_DOMAIN}" | sed "s/\.${ZONE}$//")
 else
     ZONE=$(echo "${CERTBOT_DOMAIN}" | rev | cut -d '.' -f 1-2 | rev)
+fi
+
+# Extract subdomain - if CERTBOT_DOMAIN equals ZONE, there's no subdomain
+if [ "$CERTBOT_DOMAIN" = "$ZONE" ]; then
+    SUBDOMAIN=""
+else
     SUBDOMAIN=$(echo "${CERTBOT_DOMAIN}" | sed "s/\.${ZONE}$//")
 fi
 
+# Build the DNS record name
 RECORD="_acme-challenge"
-if [ -z $SUBDOMAIN ]; then
-    RECORD="_acme-challenge"
-else
+if [ -n "$SUBDOMAIN" ]; then
     WILDCARD=$(echo "${SUBDOMAIN}" | cut -d '.' -f 1)
     if [ "$WILDCARD" = "*" ]; then
         SUBDOMAIN=$(echo "${SUBDOMAIN}" | sed 's/^\*\.//')
+        if [ -z "$SUBDOMAIN" ]; then
+            RECORD="_acme-challenge"
+        else
+            RECORD="_acme-challenge.${SUBDOMAIN}"
+        fi
+    else
+        RECORD="_acme-challenge.${SUBDOMAIN}"
     fi
-    RECORD="_acme-challenge.${SUBDOMAIN}"
 fi
 
 if [[ "$1" = "create" ]]; then
@@ -82,7 +92,7 @@ if [[ "$1" = "create" ]]; then
        	-d '{"name":"'${RECORD}'","type":"txt","ttl":60,"records":[{"value":"\"'${CERTBOT_VALIDATION}'\""}]}' \
        	"https://api.hetzner.cloud/v1/zones/${ZONE}/rrsets")
         if [[ $(echo $RESPONSE | jq -r '.error') != "null" ]]; then
-            echo "Failed to create DNS record with messsage: $(echo $RESPONSE | jq -r '.error.message')"
+            echo "Failed to create DNS record with message: $(echo $RESPONSE | jq -r '.error.message')"
             exit 1
         fi
     else
@@ -100,7 +110,7 @@ elif [[ "$1" = "cleanup" ]]; then
        	-H "Authorization: Bearer $API_TOKEN" \
        		"https://api.hetzner.cloud/v1/zones/${ZONE}/rrsets/${RECORD}/TXT")
         if [[ $(echo $RESPONSE | jq -r '.error') != "null" ]]; then
-            echo "Failed to cleanup DNS record with messsage: $(echo $RESPONSE | jq -r '.error.message')"
+            echo "Failed to cleanup DNS record with message: $(echo $RESPONSE | jq -r '.error.message')"
             exit 1
         fi
     else
