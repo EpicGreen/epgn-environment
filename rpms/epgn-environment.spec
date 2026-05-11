@@ -1,5 +1,5 @@
 Name:       epgn-environment
-Version:    1.3.3
+Version:    1.3.9
 Release:    2%{?dist}
 Vendor:     EpicGreen
 Packager:   Ante De Baas
