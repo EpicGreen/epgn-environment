@@ -52,8 +52,8 @@ npm install --legacy-peer-deps
 # Explicitly install Tailwind CSS PostCSS (might not be in package-lock)
 npm install @tailwindcss/postcss --save-dev --legacy-peer-deps
 
-# Build the Next.js application
-npm run build
+# Build the Next.js application (without Turbopack for stability)
+./node_modules/.bin/next build
 
 %pre
 getent group %{name} >/dev/null || groupadd -r %{name}
