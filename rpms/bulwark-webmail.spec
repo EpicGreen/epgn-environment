@@ -48,11 +48,14 @@ rm -f package-lock.json
 # Remove prepare script to avoid husky issues
 node -e "const fs=require('fs'); const pkg=JSON.parse(fs.readFileSync('package.json')); delete pkg.scripts.prepare; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
 
+# Remove --turbopack flag from build script
+node -e "const fs=require('fs'); const pkg=JSON.parse(fs.readFileSync('package.json')); pkg.scripts.build = pkg.scripts.build.replace('--turbopack', ''); fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
+
 # Install all dependencies fresh
 npm install --legacy-peer-deps --no-audit --no-fund
 
 # Build using webpack (not turbopack)
-npx next build
+npm run build
 
 %pre
 getent group %{name} >/dev/null || groupadd -r %{name}
