@@ -75,9 +75,21 @@ install -d -m 755 %{buildroot}%{_datadir}/%{name}
 
 # Install the Next.js standalone build
 cp -a .next/standalone/* %{buildroot}%{_datadir}/%{name}/
+
+# Copy static assets into the standalone .next directory
 install -d -m 755 %{buildroot}%{_datadir}/%{name}/.next
 cp -a .next/static %{buildroot}%{_datadir}/%{name}/.next/
+
+# Copy public directory
 cp -a public %{buildroot}%{_datadir}/%{name}/
+
+# Copy the build ID and other build artifacts
+if [ -f .next/BUILD_ID ]; then
+  cp .next/BUILD_ID %{buildroot}%{_datadir}/%{name}/.next/
+fi
+if [ -d .next/server ]; then
+  cp -a .next/server %{buildroot}%{_datadir}/%{name}/.next/
+fi
 
 # Create data directories
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}
