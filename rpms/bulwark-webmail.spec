@@ -47,7 +47,7 @@ export HUSKY=0
 node -e "const fs=require('fs'); const pkg=JSON.parse(fs.readFileSync('package.json')); delete pkg.scripts.prepare; fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
 
 # Install dependencies
-npm ci --legacy-peer-deps
+npm install --legacy-peer-deps
 
 # Build the Next.js application
 npm run build
