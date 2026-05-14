@@ -1,6 +1,6 @@
 Name:           bulwark-webmail
 Version:        1.6.5
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Modern webmail client built with Next.js and the JMAP protocol
 
 License:        AGPL-3.0-only
@@ -99,6 +99,7 @@ fi
 
 # Create data directories
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}
+install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/data
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/settings
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/admin
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/admin-state
@@ -175,9 +176,13 @@ STALWART_FEATURES=true
 SETTINGS_SYNC_ENABLED=true
 SETTINGS_DATA_DIR=%{_sharedstatedir}/%{name}/settings
 
+# Setup wizard data
+SETUP_DATA_DIR=%{_sharedstatedir}/%{name}/data
+
 # Admin data directories
 ADMIN_CONFIG_DIR=%{_sharedstatedir}/%{name}/admin
 ADMIN_STATE_DIR=%{_sharedstatedir}/%{name}/admin-state
+DATA_DIR=%{_sharedstatedir}/%{name}/data
 
 # Disable update check & telemetry by default
 BULWARK_UPDATE_CHECK=off
@@ -194,6 +199,14 @@ chown -R %{name}:%{name} %{_var}/log/%{name}
 chmod 750 %{_sharedstatedir}/%{name}
 chmod 750 %{_var}/log/%{name}
 
+# Set ownership of all subdirectories
+for dir in data settings admin admin-state telemetry; do
+  if [ -d %{_sharedstatedir}/%{name}/$dir ]; then
+    chown %{name}:%{name} %{_sharedstatedir}/%{name}/$dir
+    chmod 750 %{_sharedstatedir}/%{name}/$dir
+  fi
+done
+
 %systemd_post %{name}.service
 
 %preun
@@ -208,6 +221,7 @@ chmod 750 %{_var}/log/%{name}
 %{_datadir}/%{name}
 %dir %attr(0750,%{name},%{name}) %{_var}/log/%{name}
 %dir %attr(0750,%{name},%{name}) %{_sharedstatedir}/%{name}
+%dir %attr(0750,%{name},%{name}) %{_sharedstatedir}/%{name}/data
 %dir %attr(0750,%{name},%{name}) %{_sharedstatedir}/%{name}/settings
 %dir %attr(0750,%{name},%{name}) %{_sharedstatedir}/%{name}/admin
 %dir %attr(0750,%{name},%{name}) %{_sharedstatedir}/%{name}/admin-state
