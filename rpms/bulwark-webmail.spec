@@ -187,8 +187,7 @@ chmod 750 %{_var}/log/%{name}
 %files
 %license LICENSE
 %doc README.md CHANGELOG.md FEATURES.md CONTRIBUTING.md
-%dir %{_datadir}/%{name}
-%{_datadir}/%{name}/*
+%{_datadir}/%{name}
 %dir %attr(0750,%{name},%{name}) %{_var}/log/%{name}
 %dir %attr(0750,%{name},%{name}) %{_sharedstatedir}/%{name}
 %dir %attr(0750,%{name},%{name}) %{_sharedstatedir}/%{name}/settings
