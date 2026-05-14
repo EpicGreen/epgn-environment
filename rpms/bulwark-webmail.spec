@@ -1,6 +1,6 @@
 Name:           bulwark-webmail
 Version:        1.6.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Modern webmail client built with Next.js and the JMAP protocol
 
 License:        AGPL-3.0-only
