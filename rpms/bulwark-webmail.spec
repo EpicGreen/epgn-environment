@@ -1,6 +1,6 @@
 Name:           bulwark-webmail
 Version:        1.6.5
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Modern webmail client built with Next.js and the JMAP protocol
 
 License:        AGPL-3.0-only
@@ -84,9 +84,15 @@ cp -a .next/static %{buildroot}%{_datadir}/%{name}/.next/
 cp -a public %{buildroot}%{_datadir}/%{name}/
 
 # Copy the build ID and other build artifacts
-if [ -f .next/BUILD_ID ]; then
-  cp .next/BUILD_ID %{buildroot}%{_datadir}/%{name}/.next/
-fi
+for file in BUILD_ID routes-manifest.json build-manifest.json prerender-manifest.json \
+            react-loadable-manifest.json next-minimal-server.js next-server.js \
+            required-server-files.json app-build-manifest.json; do
+  if [ -f .next/$file ]; then
+    cp .next/$file %{buildroot}%{_datadir}/%{name}/.next/
+  fi
+done
+
+# Copy server directory if it exists
 if [ -d .next/server ]; then
   cp -a .next/server %{buildroot}%{_datadir}/%{name}/.next/
 fi
