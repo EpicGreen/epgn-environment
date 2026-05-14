@@ -49,6 +49,9 @@ node -e "const fs=require('fs'); const pkg=JSON.parse(fs.readFileSync('package.j
 # Install dependencies
 npm install --legacy-peer-deps
 
+# Explicitly install Tailwind CSS PostCSS (might not be in package-lock)
+npm install @tailwindcss/postcss --save-dev --legacy-peer-deps
+
 # Build the Next.js application
 npm run build
 
