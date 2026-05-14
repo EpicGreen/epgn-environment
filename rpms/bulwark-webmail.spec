@@ -43,7 +43,7 @@ export NEXT_TELEMETRY_DISABLED=1
 export GIT_COMMIT=%{version}
 
 # Install dependencies
-npm ci --omit=dev --ignore-scripts --legacy-peer-deps
+npm ci --ignore-scripts --legacy-peer-deps
 
 # Build the Next.js application
 npm run build
