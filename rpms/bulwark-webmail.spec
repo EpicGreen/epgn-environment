@@ -1,6 +1,6 @@
 Name:           bulwark-webmail
 Version:        1.6.5
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Modern webmail client built with Next.js and the JMAP protocol
 
 License:        AGPL-3.0-only
@@ -83,6 +83,9 @@ cp -a .next/static %{buildroot}%{_datadir}/%{name}/.next/
 # Copy public directory
 cp -a public %{buildroot}%{_datadir}/%{name}/
 
+# Create symlink for data directory (app expects it in /usr/share but we need it writable)
+ln -s %{_sharedstatedir}/%{name}/data %{buildroot}%{_datadir}/%{name}/data
+
 # Copy the build ID and other build artifacts
 for file in BUILD_ID routes-manifest.json build-manifest.json prerender-manifest.json \
             react-loadable-manifest.json next-minimal-server.js next-server.js \
@@ -100,6 +103,7 @@ fi
 # Create data directories
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/data
+install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/data/telemetry
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/settings
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/admin
 install -d -m 755 %{buildroot}%{_sharedstatedir}/%{name}/admin-state
@@ -200,7 +204,7 @@ chmod 750 %{_sharedstatedir}/%{name}
 chmod 750 %{_var}/log/%{name}
 
 # Set ownership of all subdirectories
-for dir in data settings admin admin-state telemetry; do
+for dir in data settings admin admin-state telemetry data/telemetry; do
   if [ -d %{_sharedstatedir}/%{name}/$dir ]; then
     chown %{name}:%{name} %{_sharedstatedir}/%{name}/$dir
     chmod 750 %{_sharedstatedir}/%{name}/$dir
@@ -222,6 +226,7 @@ done
 %dir %attr(0750,%{name},%{name}) %{_var}/log/%{name}
 %dir %attr(0750,%{name},%{name}) %{_sharedstatedir}/%{name}
 %dir %attr(0750,%{name},%{name}) %{_sharedstatedir}/%{name}/data
+%dir %attr(0750,%{name},%{name}) %{_sharedstatedir}/%{name}/data/telemetry
 %dir %attr(0750,%{name},%{name}) %{_sharedstatedir}/%{name}/settings
 %dir %attr(0750,%{name},%{name}) %{_sharedstatedir}/%{name}/admin
 %dir %attr(0750,%{name},%{name}) %{_sharedstatedir}/%{name}/admin-state
