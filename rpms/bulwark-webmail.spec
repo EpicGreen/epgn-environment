@@ -41,9 +41,10 @@ support, multi-language interface, and a plugin system.
 export NODE_ENV=production
 export NEXT_TELEMETRY_DISABLED=1
 export GIT_COMMIT=%{version}
+export HUSKY=0
 
 # Install dependencies
-npm ci --ignore-scripts --legacy-peer-deps
+npm ci --legacy-peer-deps
 
 # Build the Next.js application
 npm run build
