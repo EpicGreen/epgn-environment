@@ -3,7 +3,7 @@ Version:        1.43.0
 Release:        3%{?dist}
 Summary:        A lightning-fast search engine API bringing AI-powered hybrid search to your sites and applications.
 
-%global epgn_version 1.3.7
+%global epgn_version 1.3.9
 
 License:        MIT
 URL:            https://github.com/meilisearch/%{name}
