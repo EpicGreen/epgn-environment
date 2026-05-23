@@ -104,6 +104,10 @@ BuildRequires:  ccache
 BuildRequires:  pkgconfig
 BuildRequires:  make
 
+# Rust toolchain (required for LibRegex)
+BuildRequires:  rust >= 1.75
+BuildRequires:  cargo >= 1.75
+
 # Python (for build scripts and code generation)
 BuildRequires:  python3 >= 3.9
 BuildRequires:  python3-devel
